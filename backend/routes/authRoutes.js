@@ -104,8 +104,16 @@ router.post('/google', async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (error) {
-    console.error('Google Auth Error:', error);
-    res.status(401).json({ message: 'Google authentication failed' });
+    console.error('Google Auth Detailed Error:', {
+      message: error.message,
+      stack: error.stack,
+      clientIdPresent: !!process.env.GOOGLE_CLIENT_ID
+    });
+    res.status(401).json({ 
+      message: 'Google authentication failed', 
+      error: error.message,
+      details: !process.env.GOOGLE_CLIENT_ID ? 'Backend GOOGLE_CLIENT_ID is missing' : 'Token verification failed'
+    });
   }
 });
 
