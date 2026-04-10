@@ -28,25 +28,19 @@ app.use('/api', chatRoutes);
 // Database Connection
 const MONGO_URI = process.env.MONGO_DB_URI || process.env.MONGO_URI || process.env.MONGODB_URI;
 
+if (MONGO_URI) {
+  mongoose.connect(MONGO_URI)
+    .then(() => console.log('🟢 Connected to MongoDB Atlas'))
+    .catch(err => console.error('🔴 MongoDB Connection Error:', err));
+}
+
 const startServer = () => {
   if (!MONGO_URI) {
     console.warn("⚠️  WARNING: No MONGO_URI found in .env file. Running without database connection.");
-    app.listen(PORT, () => {
-      console.log(`🚀 MedicAi basic backend is running on port ${PORT} (without DB)!`);
-    });
-  } else {
-    mongoose.connect(MONGO_URI)
-      .then(() => {
-        console.log('🟢 Successfully connected to MongoDB Atlas!');
-        app.listen(PORT, () => {
-          console.log(`🚀 MedicAi basic backend is running on port ${PORT}!`);
-        });
-      })
-      .catch((error) => {
-        console.error('🔴 Error connecting to MongoDB:', error.message);
-        process.exit(1);
-      });
   }
+  app.listen(PORT, () => {
+    console.log(`🚀 MedicAi basic backend is running on port ${PORT}!`);
+  });
 };
 
 if (require.main === module) {
