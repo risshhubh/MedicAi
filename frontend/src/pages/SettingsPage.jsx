@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   User, 
   Lock, 
@@ -12,7 +13,9 @@ import {
   Globe,
   Mail,
   Smartphone,
-  CheckCircle2
+  CheckCircle2,
+  HelpCircle,
+  Headset
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -176,5 +179,21 @@ export default function SettingsPage() {
 
 // Dummy icon for the clear analysis
 function RefreshCcw({size}) {
-  return <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" stroke="currentColor" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  return (
+    <svg 
+      width={size} 
+      height={size} 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+      <path d="M16 16h5v5" />
+    </svg>
+  );
 }
