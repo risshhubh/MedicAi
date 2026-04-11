@@ -4,16 +4,13 @@
 [![License](https://img.shields.io/badge/Security-Private-blue?style=for-the-badge)](LICENSE)
 [![Build Status](https://img.shields.io/badge/Deployment-Vercel-black?style=for-the-badge)](https://vercel.com)
 
-**MedicAi** is a state-of-the-art, privacy-centric health platform designed to transform raw clinical data into actionable insights. Built with a focus on professional aesthetics and neural-processed accuracy, it bridges the gap between complex medical reports and patient understanding.
-
----
-
-## 🖥️ Project Showcase
-
 <div align="center">
+  <h3>🚀 <a href="https://medic-ai-helper.vercel.app/">Live Deployment</a></h3>
   <img src="frontend/public/medicai_mockup.png" alt="MedicAi Premium Mockup" width="90%">
   <p><i>A premium, high-fidelity clinical intelligence ecosystem spanning desktop and mobile platforms.</i></p>
 </div>
+
+**MedicAi** is a state-of-the-art, privacy-centric health platform designed to transform raw clinical data into actionable insights. Built with a focus on professional aesthetics and neural-processed accuracy, it bridges the gap between complex medical reports and patient understanding.
 
 ---
 
