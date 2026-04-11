@@ -8,8 +8,21 @@
 
 ---
 
-## 🚀 Experience the Future
-**🔗 Live Ecosystem:** [medic-ai-helper.vercel.app](https://medic-ai-helper.vercel.app/)
+## 🖥️ Project Showcase
+
+<div align="center">
+  <table border="0">
+    <tr>
+      <td width="70%">
+        <img src="frontend/public/laptopview.png" alt="MedicAi Laptop View" width="100%">
+      </td>
+      <td width="30%">
+         <img src="frontend/public/mobileview.png" alt="MedicAi Mobile View" width="100%">
+      </td>
+    </tr>
+  </table>
+  <p><i>A modern, high-performance medical dashboard and neural consult companion.</i></p>
+</div>
 
 ---
 
