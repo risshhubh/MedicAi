@@ -17,7 +17,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api, { chatWithAi } from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function ChatPage() {
@@ -34,7 +34,7 @@ export default function ChatPage() {
     const fetchHistory = async () => {
       if (currentUser?._id) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/history/${currentUser._id}`);
+          const response = await api.get(`/history/${currentUser._id}`);
           if (response.data.length > 0) {
             setMessages(response.data);
           } else {
@@ -107,21 +107,9 @@ export default function ChatPage() {
     setInput('');
     setSelectedFile(null);
     setLoading(true);
-
     try {
-      const formData = new FormData();
-      formData.append('message', currentInput);
-      formData.append('userId', currentUser?._id || '');
-      if (currentFile) {
-        formData.append('file', currentFile);
-      }
-
-      const response = await axios.post('http://localhost:5000/api/chat', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', content: response.data.reply }]);
+      const data = await chatWithAi(currentInput, currentUser?._id, currentFile);
+      setMessages(prev => [...prev, { id: Date.now() + 1, role: 'assistant', content: data.reply }]);
     } catch (error) {
       console.error('Chat error:', error);
       setMessages(prev => [...prev, { id: Date.now() + 2, role: 'assistant', content: 'Sorry, I encountered an error connecting to the neural engine. Please try again.' }]);
@@ -135,7 +123,7 @@ export default function ChatPage() {
     if (!msgId) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/chat/${msgId}`);
+      await api.delete(`/chat/${msgId}`);
       setMessages(prev => prev.filter(m => m._id !== msgId));
     } catch (error) {
       console.error('Delete error:', error);

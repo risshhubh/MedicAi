@@ -8,10 +8,37 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export const chatWithAi = async (query) => {
+// Add a request interceptor to include auth token
+api.interceptors.request.use((config) => {
+  const user = localStorage.getItem('currentUser');
+  if (user) {
+    const { token } = JSON.parse(user);
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+export const chatWithAi = async (message, userId, file = null) => {
   try {
-    const response = await api.post('/chat', { query });
-    return response.data;
+    if (file) {
+      const formData = new FormData();
+      formData.append('message', message);
+      formData.append('userId', userId || '');
+      formData.append('file', file);
+      const response = await api.post('/chat', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    } else {
+      const response = await api.post('/chat', { message, userId });
+      return response.data;
+    }
   } catch (error) {
     console.error('Chat error:', error);
     throw error;
@@ -51,3 +78,4 @@ export const googleLogin = async (token) => {
 };
 
 export default api;
+

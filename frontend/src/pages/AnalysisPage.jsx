@@ -53,7 +53,8 @@ export default function AnalysisPage() {
       });
       setTimeout(() => setStatus(''), 5000);
     } catch (error) {
-      setStatus('Upload failed');
+      const errorMsg = error.response?.data?.message || error.message || 'Upload failed';
+      setStatus(`Error: ${errorMsg}`);
       console.error(error);
     } finally {
       setUploading(false);

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { googleLogin as googleLoginApi } from '../api';
+import api, { googleLogin as googleLoginApi } from '../api';
 
 const AuthContext = createContext();
 
@@ -17,20 +17,10 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(JSON.parse(user));
     }
   }, []);
-
   const signup = async (name, email, password) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return { success: false, error: data.message || 'Signup failed' };
-      }
+      const response = await api.post('/auth/signup', { name, email, password });
+      const data = response.data;
 
       // Auto login
       localStorage.setItem('isAuthenticated', 'true');
@@ -40,23 +30,14 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
-      return { success: false, error: 'Network error connecting to backend' };
+      return { success: false, error: error.response?.data?.message || 'Signup failed' };
     }
   };
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        return { success: false, error: data.message || 'Login failed' };
-      }
+      const response = await api.post('/auth/login', { email, password });
+      const data = response.data;
 
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('currentUser', JSON.stringify(data));
@@ -65,7 +46,7 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
-      return { success: false, error: 'Network error connecting to backend' };
+      return { success: false, error: error.response?.data?.message || 'Login failed' };
     }
   };
 

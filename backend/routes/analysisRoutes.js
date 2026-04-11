@@ -3,6 +3,7 @@ const multer = require('multer');
 const { LlamaParseReader } = require('@llamaindex/cloud');
 const fs = require('fs/promises');
 const path = require('path');
+const os = require('os');
 const { processMedicalReport } = require('../services/groqService');
 
 const router = express.Router();
@@ -19,10 +20,8 @@ router.post('/upload', upload.single('file'), async (req, res) => {
 
     // Save buffer to temporary file for LlamaParse
     const filename = `upload_${Date.now()}_${req.file.originalname.replace(/\s/g, '-')}`;
-    tempPath = path.join(__dirname, '../temp', filename);
+    tempPath = path.join(os.tmpdir(), filename);
     
-    // Ensure temp directory exists
-    await fs.mkdir(path.dirname(tempPath), { recursive: true });
     await fs.writeFile(tempPath, req.file.buffer);
 
     // Initialize LlamaParse

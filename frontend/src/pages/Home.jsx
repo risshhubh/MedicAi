@@ -42,7 +42,7 @@ export default function Home() {
         return;
       }
 
-      navigate('/dashboard', { 
+      navigate('/analysis', { 
         state: { 
           report: {
             analysis: data.insights.summary,
@@ -52,8 +52,10 @@ export default function Home() {
         } 
       });
     } catch (error) {
-      setStatus('Processing failed. Please try again.');
+      const errorMsg = error.response?.data?.message || error.message || 'Upload failed';
+      setStatus(`Error: ${errorMsg}`);
       console.error(error);
+    } finally {
       setUploading(false);
     }
   };
