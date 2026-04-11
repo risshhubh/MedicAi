@@ -11,17 +11,8 @@
 ## 🖥️ Project Showcase
 
 <div align="center">
-  <table border="0">
-    <tr>
-      <td width="70%">
-        <img src="frontend/public/laptopview.png" alt="MedicAi Laptop View" width="100%">
-      </td>
-      <td width="30%">
-         <img src="frontend/public/mobileview.png" alt="MedicAi Mobile View" width="100%">
-      </td>
-    </tr>
-  </table>
-  <p><i>A modern, high-performance medical dashboard and neural consult companion.</i></p>
+  <img src="frontend/public/medicai_mockup.png" alt="MedicAi Premium Mockup" width="90%">
+  <p><i>A premium, high-fidelity clinical intelligence ecosystem spanning desktop and mobile platforms.</i></p>
 </div>
 
 ---
